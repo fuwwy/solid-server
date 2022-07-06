@@ -15,13 +15,13 @@ const port = 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(join(__dirname, "./public")));
 
-app.get("*", (req, res) => {
+app.get("*", async (req, res) => {
   res.locals.manifest = manifest;
   res.locals.assetManifest = assetManifest;
   res.locals.routerContext = {};
   let html;
   try {
-    html = renderToString(() => App(req, res));
+    html = await renderToString(() => App(req, res));
   } catch (err) {
     console.error(err);
   } finally {

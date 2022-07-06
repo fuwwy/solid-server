@@ -60,6 +60,20 @@ function solidsStartRouteManifest(options) {
   };
 }
 
+function solidStartSSR(options) {
+  return {
+    name: "solid-start-ssr",
+    configureServer(vite) {
+      return async () => {
+        const { createDevHandler } = await import("./devServer.js");
+        remove_html_middlewares(vite.middlewares);
+        vite.middlewares.use(createDevHandler(vite));
+      };
+    }
+  };
+}
+
+
 /**
  * @returns {import('vite').Plugin[]}
  */
@@ -80,6 +94,20 @@ export default function solidServer(options) {
     defineConfig(options),
     options.inspect && inspect(),
     solid(options),
+    options.ssr && solidStartSSR(options),
     solidsStartRouteManifest(options)
   ].filter(Boolean);
+}
+
+function remove_html_middlewares(server) {
+  const html_middlewares = [
+    "viteIndexHtmlMiddleware",
+    "vite404Middleware",
+    "viteSpaFallbackMiddleware"
+  ];
+  for (let i = server.stack.length - 1; i > 0; i--) {
+    if (html_middlewares.includes(server.stack[i].handle.name)) {
+      server.stack.splice(i, 1);
+    }
+  }
 }
