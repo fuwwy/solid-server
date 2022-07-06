@@ -1,12 +1,11 @@
 {
-  "name": "vite-template-solid",
+  "name": "solid-server",
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "start": "node bin.cjs start",
+    "dev": "node bin.cjs dev",
+    "build": "node bin.cjs build"
   },
   "type": "module",
   "license": "MIT",
