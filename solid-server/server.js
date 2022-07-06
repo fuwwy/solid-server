@@ -2,7 +2,7 @@ import express from "express";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
-import { renderToString } from "solid-js/web";
+import { renderToStringAsync } from "solid-js/web";
 import App from "./app";
 
 import manifest from "../../dist/public/rmanifest.json";
@@ -21,7 +21,7 @@ app.get("*", async (req, res) => {
   res.locals.routerContext = {};
   let html;
   try {
-    html = await renderToString(() => App(req, res));
+    html = await renderToStringAsync(() => App(req, res));
   } catch (err) {
     console.error(err);
   } finally {

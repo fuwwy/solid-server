@@ -20,7 +20,6 @@ const App: Component = () => {
         <Links />
       </head>
       <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
         <div class={styles.App}>
           <Routes>
             <Route path="/" element={(
